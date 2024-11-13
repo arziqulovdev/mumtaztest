@@ -24,6 +24,11 @@ def detail(request, code):
             test.save()
             messages.success(request, "Test boshlandi!")
             return redirect('/test/'+str(code) + '/')
+        if request.GET.get('finish') == 'True' and test.author == request.user:
+            test.is_end = True
+            test.save()
+            messages.success(request, "Test tugadi!")
+            return redirect('/test/'+str(code) + '/')
     
     return render(request, "testblog/detail.html", {"post": test})
 
