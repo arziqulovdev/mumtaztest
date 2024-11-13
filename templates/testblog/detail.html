@@ -29,6 +29,9 @@
                     <a href="add/" class="btn btn-secondary btn-sm">Savol qo'shish</a>
                     <a href="/test/{{post.code}}/?start=True" class="btn btn-warning btn-sm">Testni saqlash va boshlash</a>
                 {% endif %}
+                {% if post.author == user and post.is_start == True %}
+                    <a href="/test/{{post.code}}/?finish=True" class="btn btn-dark btn-sm">Testni to'xtatish</a>
+                {% endif %}
                 {% if post.author == user %}
                     <a href="delete/" class="btn btn-danger btn-sm">O'chirish</a>
                 {% endif %}
