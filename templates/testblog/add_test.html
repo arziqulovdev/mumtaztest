@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Test qo'shish{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Yangi Test Yaratish</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_name" class="form-label">{{ form.name.label }}</label>
+            <input required type="text" class="form-control" id="id_name" name="name" placeholder="Masalan: Matematika asoslari">
+            <div class="form-text">{{ form.name.help_text }}</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_summary" class="form-label">{{ form.summary.label }}</label>
+            <textarea required class="form-control" id="id_summary" name="summary" rows="3" placeholder="Test haqida qisqacha..."></textarea>
+            <div class="form-text">{{ form.summary.help_text }}</div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="id_public" name="public">
+            <label class="form-check-label" for="id_public">{{ form.public.label }}</label>
+            <div class="form-text">{{ form.public.help_text }}</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_time" class="form-label">{{ form.time.label }}</label>
+            <input required type="number" class="form-control" id="id_time" name="time" placeholder="Vaqtni kiriting">
+            <div class="form-text">{{ form.time.help_text }}</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Saqlash</button>
+    </form>
+</div>
+
+{% endblock content %}

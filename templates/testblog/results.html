@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Natijalar{% endblock title %}
+
+{% block content %}
+{% if results %}
+    <h1 class="text-center my-4 blink" style="color: #4CAF50; font-weight: bold;">Natija</h1>
+    <div class="card mx-auto shadow-sm" style="max-width: 600px; border-radius: 8px;">
+        <div class="card-body">
+            <h5 class="card-title text-primary text-center">{{ res.test }}</h5>
+            <ul class="list-group list-group-flush mt-3">
+                {% for result in results %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if result == res %}bg-light border-warning{% endif %}">
+                        <div>
+                            <span class="badge bg-primary me-2" style="font-size: 16px;">{{ forloop.counter }}-o'rin</span>
+                            <span style="{% if result == res %}color: #ece910;{% endif %} font-weight: bold;">{{ result.user }}</span>
+                        </div>
+                        <span class="badge bg-success" style="font-size: 18px;">{{ result.soni }}/{{ soni }} ta</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% else %}
+    <h1 class="text-center text-danger mt-5">Hali hech kim testni ishlamagan!</h1>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Bosh sahifa{% endblock title %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="simple-title">Qulay Onlayn Test Platformasi: Bilimingizni Mustahkamlang!</h2>
+    
+    <div class="row justify-content-center mt-4">
+        {% for post in posts %}
+        <div class="col-12 col-md-10">
+            <div class="card mb-3 shadow-sm" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Muallif: {{ post.author }}</h6>
+                    <p class="card-text">{{ post.summary }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Yaratilgan sana: {{ post.date|date:"d-m-Y" }}</small>
+                    <a href="/test/{{ post.code }}/" class="btn btn-primary btn-sm">Kirish</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .simple-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        width: 90%;
+        margin: 0 auto;
+    }
+</style>
+
+{% endblock content %}

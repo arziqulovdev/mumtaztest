@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ test.name }}</title>
+    <link rel="shortcut icon" href="{% static 'img/mumtazdev.jpg' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Bosh sahifa uslubi */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            margin: 0;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .summary {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff3333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question-section {
+            margin-bottom: 30px;
+        }
+        .question-number {
+            font-weight: bold;
+            color: #333;
+            margin-right: 5px;
+        }
+        .question {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 8px 0;
+        }
+        .options label {
+            background-color: #f0f0f5;
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: block;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options input[type="radio"] {
+            display: none;
+        }
+        .options input[type="radio"]:checked + label {
+            background-color: #FF4D4D;
+            color: #fff;
+        }
+        .options label:hover {
+            background-color: #e8e8ec;
+        }
+        .btn-finish {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #FF4D4D;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-finish:hover {
+            background-color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ test.name }}</h1>
+        <p class="summary">{{ test.summary }}</p>
+
+        <!-- Taymer -->
+        <div class="timer" id="timer">00:00</div>
+
+        <form id="testForm" method="POST">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question-section">
+                    <div class="question">
+                        <span class="question-number">{{ forloop.counter }}.</span>
+                        <span>{{ question.question }}</span>
+                    </div>
+                    <ul class="options">
+                        {% for option in question.options.all %}
+                        <li>
+                            <input type="radio" id="{{ question.id }}_{{ option.variant }}" name="question_{{ question.id }}" value="{{ option.variant }}">
+                            <label for="{{ question.id }}_{{ option.variant }}">{{ option.variant }}</label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-finish">Tayyor</button>
+        </form>
+    </div>
+
+    <script>
+        // Taymer funksiyasi
+        let timeLeft = {{ test.time }}*3600; // Vaqtni bazadan sekundlarda olingan qiymatga moslang
+
+        const timerDisplay = document.getElementById("timer");
+        const form = document.getElementById("testForm");
+
+        function updateTimer() {
+            // Taymerni minut va sekundlarga aylantirish
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval); // Taymerni to'xtatish
+                form.submit(); // Formani avtomatik jo'natish
+            }
+            timeLeft--; // Orqaga sanash
+        }
+
+        // Taymerni har 1 sekundda yangilab turish
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>

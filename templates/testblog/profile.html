@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.username }}{% endblock title %}
+{% block content %}
+
+<div class="container mt-5">
+    <!-- Profil ma'lumotlari -->
+    <div class="profile-header d-flex flex-column align-items-center mb-4">
+        <img src="https://www.pngkit.com/png/detail/281-2812821_user-account-management-logo-user-icon-png.png" alt="Profile Picture" class="profile-picture mb-2">
+        <h2>{{ user.username }}</h2>
+        <p class="text-muted">Telefon: +998941948504</p>
+    </div>
+
+    <!-- Yaratilgan testlar grid ko'rinishida -->
+    <h3 class="mb-3 text-center">TESTLAR RO'YXATI:</h3>
+    <div class="tests-grid">
+        {% for test in user_tests %}
+        <div class="test-card d-flex flex-column align-items-center justify-content-center">
+            <a href="{% url 'detail' test.code %}" class="test-card-link">
+                <div class="test-name">{{ test.name }}</div>
+            </a>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">Hozircha hech qanday test yaratilmagan.</p>
+        {% endfor %}
+        <div class="test-card add-test d-flex align-items-center justify-content-center">
+            <a href="{% url 'add_test' %}" class="btn btn-outline-primary">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-header {
+        text-align: center;
+    }
+
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #e1306c;
+    }
+
+    .tests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 15px;
+    }
+
+    .test-card, .add-test {
+        background-color: #fafafa;
+        border: 1px solid #dbdbdb;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .test-card:hover, .add-test:hover {
+        transform: scale(1.05);
+    }
+
+    .test-card-link {
+        text-decoration: none;
+        color: #333;
+        font-size: 0.9rem;
+    }
+
+    .test-name {
+        color: #262626;
+        font-weight: bold;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .btn-outline-primary {
+        color: #e1306c;
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+</style>
+
+{% endblock content %}

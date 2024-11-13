@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404 - Page Not Found</title>
+    <link rel="shortcut icon" href="{% static 'img/mumtazdev.jpg' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .alert {
+            position: absolute;
+            top: 10px; /* Alert pastroqqa tushirildi */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            animation: fadeInOut 4s ease forwards;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+        h1 {
+            font-size: 120px;
+            font-weight: 600;
+            color: #FF4D4D;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #FF4D4D;
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #ff3333;
+        }
+        .icon {
+            font-size: 60px;
+            color: #FF4D4D;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        <div class="icon">&#9888;</div>
+        <h1>404</h1>
+        <h2>Oops! Page not found.</h2>
+        <p>Sorry, but the page you are looking for has either moved or no longer exists.</p>
+        <a href="/" class="button">Go to Homepage</a>
+    </div>
+</body>
+</html>
