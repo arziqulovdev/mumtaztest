@@ -14,13 +14,11 @@ def email_yuborish(qabul_qiluvchi_email, mavzu, matn):
     msg['To'] = qabul_qiluvchi_email
     msg['Subject'] = mavzu
 
-    # Xabar matni qo'shish
     msg.attach(MIMEText(matn, 'plain'))
 
-    # Gmail SMTP serveriga ulanish
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()  # Xavfsiz ulanish
+        server.starttls() 
         server.login(email_address, email_password)
         text = msg.as_string()
         server.sendmail(email_address, qabul_qiluvchi_email, text)
@@ -31,8 +29,7 @@ def email_yuborish(qabul_qiluvchi_email, mavzu, matn):
         server.quit()
 
 
-
 def generate_confirm_code():
     characters = "0123456789"
     code = ''.join(random.choices(characters, k=4))
-    return int(code)
+    return int(code) if code[0] != '0' else generate_confirm_code()

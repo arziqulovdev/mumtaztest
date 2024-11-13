@@ -1,4 +1,3 @@
-<!-- mail.html -->
 {% extends 'base.html' %}
 
 {% block title %}{{ email }}{% endblock title %}
@@ -69,6 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace' && !e.target.value && index > 0) {
                 inputs[index - 1].focus();
+            }
+        });
+
+        // Event listener for paste action
+        input.addEventListener('paste', (e) => {
+            const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+            if (pasteData.length === inputs.length && /^\d+$/.test(pasteData)) {
+                e.preventDefault();  // prevent default paste action
+                pasteData.split('').forEach((char, idx) => {
+                    inputs[idx].value = char;
+                });
+                inputs[inputs.length - 1].focus();  // focus on the last input after pasting
             }
         });
     });

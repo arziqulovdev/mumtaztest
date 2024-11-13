@@ -24,6 +24,11 @@ def detail(request, code):
             test.save()
             messages.success(request, "Test boshlandi!")
             return redirect('/test/'+str(code) + '/')
+        if request.GET.get('finish') == 'True' and test.author == request.user:
+            test.is_end = True
+            test.save()
+            messages.success(request, "Test tugadi!")
+            return redirect('/test/'+str(code) + '/')
     
     return render(request, "testblog/detail.html", {"post": test})
 
@@ -31,7 +36,7 @@ def detail(request, code):
 @login_required
 def result(request, code):
     test = Test.objects.get(code=code)
-    soni = len(Question.objects.filter(test=test))
+    soni = Question.objects.filter(test=test).count()
     result = Natija.objects.filter(test=test).order_by('-soni')
 
     try:
@@ -109,13 +114,27 @@ def solve_test(request, code):
                     result.soni += 1
                     result.save()
         messages.success(request, "Test muvaffaqiyatli yakunlandi!")
-        return redirect("/test/"+code+'/')
+        return redirect("/test/"+code+'/score/')
 
     data = {
         "questions": questions,
         "test": test
     }
     return render(request, "testblog/test.html", data)
+
+
+@login_required
+def score(request, code):
+    test = Test.objects.get(code=code)
+    if Natija.objects.filter(user=request.user).exists() and Question.objects.filter(test=test).count() != 0:
+        total_questions = Question.objects.filter(test=test).count()
+        correct_answers = Natija.objects.get(user=request.user, test=test).soni
+        score = correct_answers/total_questions*100
+        return render(request, "testblog/result.html", {"total_questions": total_questions, "correct_answers": correct_answers, "score": score})
+    else:
+        messages.error(request, "Testni hali ishlamagansiz.")
+        return redirect("/error-page/")
+    return render(request, "testblog/result.html")
 
 
 def enter_test(request):

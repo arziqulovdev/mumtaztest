@@ -5,6 +5,12 @@
         <div class="card-body">
             <h3 class="card-title text-primary">{{ post.name }}</h3>
             <h6 class="card-subtitle mb-2 text-muted">Muallif: {{ post.author }}</h6>
+            
+            <!-- Test uchun vaqt ko'rsatish -->
+            <p class="text-info font-weight-bold mb-3" style="font-size: 1rem;">
+                Test uchun vaqt: {{ post.time }} soat
+            </p>
+            
             <p class="card-text mt-3">{{ post.summary }}</p>
             <div class="card-footer bg-light">
                 <div>
@@ -28,6 +34,9 @@
                 {% if post.author == user and post.is_start == False %}
                     <a href="add/" class="btn btn-secondary btn-sm">Savol qo'shish</a>
                     <a href="/test/{{post.code}}/?start=True" class="btn btn-warning btn-sm">Testni saqlash va boshlash</a>
+                {% endif %}
+                {% if post.author == user and post.is_start == True %}
+                    <a href="/test/{{post.code}}/?finish=True" class="btn btn-dark btn-sm">Testni to'xtatish</a>
                 {% endif %}
                 {% if post.author == user %}
                     <a href="delete/" class="btn btn-danger btn-sm">O'chirish</a>

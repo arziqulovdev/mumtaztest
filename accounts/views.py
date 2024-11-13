@@ -78,7 +78,7 @@ def confirm(request):
             messages.success(request, 'Hisob muvoffaqiyatli yaratildi!')
             return redirect('login')
         else:
-            messages.error(request, 'Kod xato. Kod qayta yuborildi!')
+            messages.error(request, 'Kod xato. Qayta kiriting')
 
     return render(request, "accounts/confirm.html", {"email": signup_data['email']})
     

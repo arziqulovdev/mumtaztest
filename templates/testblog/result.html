@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Score{% endblock title %}
+
+{% block content %}
+<div class="result-container text-center">
+    <!-- User's name display -->
+    <div class="username-display">
+        Hello, {{ user.username }}!
+    </div>
+    
+    <!-- User's score display -->
+    <div class="score-display">
+        {{ correct_answers }} / {{ total_questions }}
+    </div>
+    
+    <!-- User's percentage display -->
+    <div class="percentage-display">
+        {{ score }}%
+    </div>
+    
+    <!-- Button to go back to home or retake test -->
+    <div class="mt-4">
+        <a href="{% url 'list' %}" class="btn btn-go-home px-4 py-2">Go to Home</a>
+    </div>
+</div>
+
+<!-- Style section -->
+<style>
+    .result-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .username-display {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #555;
+    }
+    .score-display {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #1a73e8;
+        margin-top: 20px;
+    }
+    .percentage-display {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4caf50;
+        margin-top: 10px;
+    }
+    .btn-go-home {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: 600;
+        border-radius: 5px;
+    }
+    .btn-go-home:hover {
+        background-color: #0f59c6;
+        color: #fff;
+    }
+</style>
+{% endblock %}
