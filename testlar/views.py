@@ -40,7 +40,7 @@ def result(request, code):
     result = Natija.objects.filter(test=test).order_by('-soni')
 
     try:
-        res = Natija.objects.get(user=request.user)
+        res = Natija.objects.get(user=request.user, test=test)
     except Natija.DoesNotExist:
         res = {}
         messages.info(request, "Siz bu testni yechmagansiz.")
